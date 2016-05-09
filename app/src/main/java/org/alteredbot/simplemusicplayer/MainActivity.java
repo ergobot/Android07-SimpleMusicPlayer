@@ -79,17 +79,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new SongAdapter(songList, new SongAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Song item) {
-
-                contentImage.setImageResource(item.getPictureHolder());
-                contentComposer.setText(item.getComposer());
-                contentTitle.setText(item.getTitle());
-                contentDescription.setText(item.getDescription());
-
-                Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT);
-                currentSong = item;
                 playSong(item);
-
-
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -103,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(currentSong == null){
                     // no song selected play the last song in the list
-                    playSong(songList.get(songList.size()));
+                    playSong(songList.get(songList.size()-1));
                 }else if(songList.indexOf(currentSong) == 0){
                     //
-                    playSong(songList.get(songList.size()));
+                    playSong(songList.get(songList.size()-1));
                 }else{
 
                     int previousSongIndex = songList.indexOf(currentSong)-1;
@@ -132,8 +122,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(currentSong == null){
                     // no song selected play the first song in the list
+//                    mRecyclerView.findViewHolderForAdapterPosition(0).itemView.callOnClick();
                     playSong(songList.get(0));
-                }else if(songList.indexOf(currentSong) == songList.size()){
+                }else if(songList.indexOf(currentSong) == songList.size()-1){
                     playSong(songList.get(0));
                 }else{
 
@@ -153,9 +144,13 @@ public class MainActivity extends AppCompatActivity {
     private void toggleMediaPlayer(){
         if(mediaPlayer != null) {
             if (mediaPlayer.isPlaying()) {
+                actionButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                 mediaPlayer.pause();
+
             } else {
                 mediaPlayer.start();
+                actionButton.setImageResource(R.drawable.ic_pause_black_24dp);
+
             }
         }
     }
@@ -177,6 +172,13 @@ public class MainActivity extends AppCompatActivity {
         }
         seekbar.setProgress((int)startTime);
         myHandler.postDelayed(UpdateSongTime,1000);
+
+        contentImage.setImageResource(song.getPictureHolder());
+        contentComposer.setText(song.getComposer());
+        contentTitle.setText(song.getTitle());
+        contentDescription.setText(song.getDescription());
+        actionButton.setImageResource(R.drawable.ic_pause_black_24dp);
+        currentSong = song;
     }
 
 
