@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,6 +184,14 @@ public class MainActivity extends AppCompatActivity {
         }
         mediaPlayer = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(song.getMusicHolder(), "raw", getPackageName()));
         mediaPlayer.start();
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                nextButton.callOnClick();
+            }
+        });
+
         finalTime = mediaPlayer.getDuration();
         startTime = mediaPlayer.getCurrentPosition();
 
