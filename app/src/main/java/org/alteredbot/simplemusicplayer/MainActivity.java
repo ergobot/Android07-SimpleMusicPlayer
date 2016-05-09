@@ -84,6 +84,25 @@ public class MainActivity extends AppCompatActivity {
         });
         mRecyclerView.setAdapter(mAdapter);
 
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if(mediaPlayer != null){
+                    mediaPlayer.seekTo(seekBar.getProgress());
+                }
+            }
+        });
+
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
