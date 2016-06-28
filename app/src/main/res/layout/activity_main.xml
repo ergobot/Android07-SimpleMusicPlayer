@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/content_image"
+            android:layout_margin="24dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             tools:src="@drawable/dvorak"
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/content_title"
             tools:text="The New World"
+            android:layout_margin="16dp"
             android:maxLines="1"
             android:layout_below="@+id/content_composer"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -46,9 +48,10 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:id="@+id/scrollview_description"
             android:layout_below="@+id/content_title"
+            android:layout_above="@+id/playbar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" >
 
@@ -65,13 +68,13 @@
         </ScrollView>
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_above="@+id/playbar"
-            android:layout_below="@+id/scrollview_description"
-            android:layout_height="match_parent"/>
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/my_recycler_view"-->
+            <!--android:scrollbars="vertical"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_above="@+id/playbar"-->
+            <!--android:layout_below="@+id/scrollview_description"-->
+            <!--android:layout_height="match_parent"/>-->
 
 
         <RelativeLayout

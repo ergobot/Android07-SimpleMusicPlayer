@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> {
     public interface OnItemClickListener {
-        void onItemClick(Song item);
+        void onItemClick(Song item,int position);
     }
 
     private List<Song> songList;
@@ -26,14 +26,15 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> 
             composer = (TextView) view.findViewById(R.id.composer);
         }
 
-        public void bind(final Song item, final OnItemClickListener listener) {
+        public void bind(final Song item, final OnItemClickListener listener, final int position) {
 
             title.setText(item.title);
             composer.setText(item.composer);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    listener.onItemClick(item);
+
+                    listener.onItemClick(item,position);
                 }
             });
         }
@@ -55,7 +56,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Song song = songList.get(position);
-        holder.bind(song,listener);
+        holder.bind(song,listener,position);
     }
 
     @Override

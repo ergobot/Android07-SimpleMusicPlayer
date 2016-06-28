@@ -1,5 +1,6 @@
 package org.alteredbot.simplemusicplayer;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -24,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
     TextView contentTitle;
     TextView contentDescription;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     private ImageButton previousButton;
     private FloatingActionButton actionButton;
@@ -64,25 +62,8 @@ public class MainActivity extends AppCompatActivity {
         nextButton = (ImageButton) findViewById(R.id.nextbutton);
 
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
         // specify an adapter (see also next example)
         songList = getSongList();
-        mAdapter = new SongAdapter(songList, new SongAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Song item) {
-                playSong(item);
-            }
-        });
-        mRecyclerView.setAdapter(mAdapter);
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -114,15 +95,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if(currentSong == null){
                     // no song selected play the last song in the list
-                    playSong(songList.get(songList.size()-1));
+                    playSong(songList.size()-1);
                 }else if(songList.indexOf(currentSong) == 0){
                     //
-                    playSong(songList.get(songList.size()-1));
+                    playSong(songList.size()-1);
                 }else{
 
                     int previousSongIndex = songList.indexOf(currentSong)-1;
-                    Song previousSong = songList.get(previousSongIndex);
-                    playSong(previousSong);
+//                    Song previousSong = songList.get(previousSongIndex);
+                    playSong(previousSongIndex);
 
                 }
             }
@@ -144,23 +125,37 @@ public class MainActivity extends AppCompatActivity {
                 if(currentSong == null){
                     // no song selected play the first song in the list
 //                    mRecyclerView.findViewHolderForAdapterPosition(0).itemView.callOnClick();
-                    playSong(songList.get(0));
+                    playSong(0);
                 }else if(songList.indexOf(currentSong) == songList.size()-1){
-                    playSong(songList.get(0));
+                    playSong(0);
                 }else{
 
                     int nextSongIndex = songList.indexOf(currentSong)+1;
-                    Song nextSong = songList.get(nextSongIndex);
-                    playSong(nextSong);
+//                    Song nextSong = songList.get(nextSongIndex);
+                    playSong(nextSongIndex);
                 }
             }
         });
 
 
+        Intent mIntent = getIntent();
+        int songIndex = mIntent.getIntExtra("songIndex", 0);
 
+        playSong(songIndex);
 
 
     }
+
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        if(mediaPlayer != null && mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+
+        }
+    }
+
 
     private void toggleMediaPlayer(){
         if(mediaPlayer != null) {
@@ -177,11 +172,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void playSong(Song song){
+    private void playSong(int songIndex){
+
+        Song song = songList.get(songIndex);
+
         if(mediaPlayer != null && mediaPlayer.isPlaying()){
             mediaPlayer.stop();
 
         }
+
         mediaPlayer = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier(song.getMusicHolder(), "raw", getPackageName()));
         mediaPlayer.start();
 
