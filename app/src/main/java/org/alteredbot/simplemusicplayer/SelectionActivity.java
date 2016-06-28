@@ -1,18 +1,10 @@
 package org.alteredbot.simplemusicplayer;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +14,6 @@ public class SelectionActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    private Song currentSong = null;
 
     List<Song> songList = null;
 
@@ -52,15 +42,6 @@ public class SelectionActivity extends AppCompatActivity {
         });
         mRecyclerView.setAdapter(mAdapter);
 
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -72,8 +53,6 @@ public class SelectionActivity extends AppCompatActivity {
         startActivity(myIntent);
 
     }
-
-
 
     private List<Song> getSongList(){
         ArrayList<Song> songs = new ArrayList<Song>();

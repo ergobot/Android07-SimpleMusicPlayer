@@ -6,14 +6,11 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private double startTime = 0;
     private double finalTime = 0;
     private Handler myHandler = new Handler();
-
-    // should think of some better way
-    public static int oneTimeOnly = 0;
 
     private Song currentSong = null;
 
@@ -102,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 }else{
 
                     int previousSongIndex = songList.indexOf(currentSong)-1;
-//                    Song previousSong = songList.get(previousSongIndex);
                     playSong(previousSongIndex);
 
                 }
@@ -124,14 +117,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(currentSong == null){
                     // no song selected play the first song in the list
-//                    mRecyclerView.findViewHolderForAdapterPosition(0).itemView.callOnClick();
                     playSong(0);
                 }else if(songList.indexOf(currentSong) == songList.size()-1){
                     playSong(0);
                 }else{
 
                     int nextSongIndex = songList.indexOf(currentSong)+1;
-//                    Song nextSong = songList.get(nextSongIndex);
                     playSong(nextSongIndex);
                 }
             }
@@ -194,10 +185,8 @@ public class MainActivity extends AppCompatActivity {
         finalTime = mediaPlayer.getDuration();
         startTime = mediaPlayer.getCurrentPosition();
 
-        if (oneTimeOnly == 0) {
-            seekbar.setMax((int) finalTime);
-            oneTimeOnly = 1;
-        }
+        seekbar.setMax((int) finalTime);
+
         seekbar.setProgress((int)startTime);
         myHandler.postDelayed(UpdateSongTime,1000);
 
@@ -213,13 +202,6 @@ public class MainActivity extends AppCompatActivity {
     private Runnable UpdateSongTime = new Runnable() {
         public void run() {
             startTime = mediaPlayer.getCurrentPosition();
-//            tx1.setText(String.format("%d min, %d sec",
-//
-//                    TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-//                    TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-//                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
-//                                    toMinutes((long) startTime)))
-//            );
             seekbar.setProgress((int)startTime);
             myHandler.postDelayed(this, 100);
         }

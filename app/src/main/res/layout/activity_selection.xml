@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/library"
-            tools:text="Library"
+            android:text="@string/library"
+            android:layout_margin="16dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="center_horizontal" />
 
